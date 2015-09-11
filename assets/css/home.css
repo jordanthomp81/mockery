@@ -1,3 +1,30 @@
+/* Start Imports */
+
+@font-face {
+    font-family: 'Roboto-Light'; /*a name to be used later*/
+    src: url('fonts/Roboto-Light.ttf'); /*URL to font*/
+}
+
+@font-face {
+    font-family: 'Roboto-Regular'; /*a name to be used later*/
+    src: url('fonts/Roboto-Regular.ttf'); /*URL to font*/
+}
+
+@font-face {
+    font-family: 'Roboto-Regular'; /*a name to be used later*/
+    src: url('fonts/Roboto-Regular.ttf'); /*URL to font*/
+}
+
+@font-face {
+    font-family: 'Roboto-ThinItalic'; /*a name to be used later*/
+    src: url('fonts/Roboto-ThinItalic.ttf'); /*URL to font*/
+}
+
+@font-face {
+    font-family: 'Roboto-Thin'; /*a name to be used later*/
+    src: url('fonts/Roboto-Thin.ttf'); /*URL to font*/
+}
+
 /* Start The Css Reset */
 
 html, body, div, span, applet, object, iframe,
@@ -56,5 +83,5 @@ table {
 /* Start Home Navigation Styles */
 
 .navigation-container {
-	
+	background
 }
