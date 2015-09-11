@@ -289,7 +289,7 @@ table {
 /* Start Feature Styles */
 
 .features-container {
-	height: 2246px;
+	height: auto;
 	background-color: white;
 }
 
@@ -312,28 +312,101 @@ table {
 	margin-bottom: 125px;
 }
 
-.features-box-one {
-	margin-top: 100px;
+.features-box.row.fullWidth {
+	margin-top: 110px;
 }
 
-.features-box-two {
-	margin-top: 100px;
+.features-box-heading {
+	font-family: 'Roboto-Regular';
+	font-size: 33px;
+	color: #64BD60;
+	margin-top: 34px;
+	margin-bottom: 45px;
 }
 
-.features-box-three {
-	margin-top: 100px;
+.features-box-text {
+	font-family: 'Roboto-Regular';
+	font-size: 20px;
+	color: #6B6C6E;
+	line-height: 50px;
+	margin-bottom: 0;
+}
+
+#last-feature-box {
+	margin-bottom: 110px;
+}
+
+.features-box-btn {
+	margin-top: 35px;
+	background-color: #28B579;
+	color: white;
+	font-family: 'Roboto-Regular';
+	font-size: 20px;
+	padding: 18px 30px 16px 30px;
+}
+
+.features-box-btn:visited {
+	margin-top: 35px;
+	background-color: #28B579;
+	color: white;
+	font-family: 'Roboto-Regular';
+	font-size: 20px;
+	padding: 18px 30px 16px 30px;
+}
+
+.features-box-btn:hover {
+	margin-top: 35px;
+	background-color: #1B9B61;
+	color: white;
+	font-family: 'Roboto-Regular';
+	font-size: 20px;
+	padding: 18px 30px 16px 30px;
+}
+
+.features-box-btn:visited {
+	margin-top: 35px;
+	background-color: #1B9B61;
+	color: white;
+	font-family: 'Roboto-Regular';
+	font-size: 20px;
+	padding: 18px 30px 16px 30px;
 }
 
 /* Start Announcement Styles */
 
 .announcement-container {
-	height: 70px;
+	height: auto;
 	background-color: #64BD60;
+}
+
+.announcement-heading {
+	font-family: 'Roboto-Regular';
+	font-size: 24px;
+	color: #EFEFEF;
+	margin-top: 40px;
+	margin-bottom: 40px;
+}
+
+.announcement-heading > a {
+	font-family: 'Roboto-Regular';
+	font-size: 24px;
+	color: #EFEFEF;
+	margin-top: 40px;
+	margin-bottom: 40px;
+	text-decoration: underline;
 }
 
 /* Start Footer Styles */
 
 .footer-container {
-	height: 155px;
+	height: 100px;
 	background-color: #292E33;
+}
+
+.footer-heading {
+	font-family: 'Roboto-Regular';
+	font-size: 18px;
+	color: #EFEFEF;
+	margin-top: 40px;
+	margin-bottom: 40px;
 }
