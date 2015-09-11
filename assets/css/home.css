@@ -6,8 +6,8 @@
 }
 
 @font-face {
-    font-family: 'Roboto-Regular'; /*a name to be used later*/
-    src: url('fonts/Roboto-Regular.ttf'); /*URL to font*/
+    font-family: 'Roboto-Bold'; /*a name to be used later*/
+    src: url('fonts/Roboto-Bold.ttf'); /*URL to font*/
 }
 
 @font-face {
@@ -80,8 +80,161 @@ table {
    max-width: initial;
 }
 
+.columns {
+	min-height: 1px;
+}
+
 /* Start Home Navigation Styles */
 
 .navigation-container {
-	background
+  	background-image: url(../img/header_background.png);
+  	background-position: center center;
+  	background-repeat: no-repeat;
+  	background-attachment: fixed;
+  	background-size: cover;
+  	height: 90%;
+  	white-space: nowrap;
+	overflow: hidden;
+}
+
+.navigation-logo {
+	margin-top: 62px;
+	margin-left: 57px;
+}
+
+.navigation-go-to-app-btn {
+	margin-top: 77px;
+	margin-right: 67px;
+	background-color: transparent;
+	border: 3px solid #28B579;
+	border-radius: 20px;
+	color: #28B579;
+	font-family: 'Roboto-Regular';
+	font-size: 15px;
+	padding: 13px 25px 11px 25px;
+}
+
+.navigation-go-to-app-btn:visited {
+	margin-top: 77px;
+	margin-right: 67px;
+	background-color: transparent;
+	border: 3px solid #28B579;
+	border-radius: 20px;
+	color: #28B579;
+	font-family: 'Roboto-Regular';
+	font-size: 15px;
+	padding: 13px 25px 11px 25px;
+}
+
+.navigation-go-to-app-btn:hover {
+	margin-top: 77px;
+	margin-right: 67px;
+	background-color: #28B579;
+	border: 3px solid #28B579;
+	border-radius: 20px;
+	color: white;
+	font-family: 'Roboto-Regular';
+	font-size: 15px;
+	padding: 13px 25px 11px 25px;
+}
+
+.navigation-go-to-app-btn:active {
+	margin-top: 77px;
+	margin-right: 67px;
+	background-color: #28B579;
+	border: 3px solid #28B579;
+	border-radius: 20px;
+	color: white;
+	font-family: 'Roboto-Regular';
+	font-size: 15px;
+	padding: 13px 25px 11px 25px;
+}
+
+.navigation-welcome-text {
+	font-family: 'Roboto-Light';
+	font-size: 80px;
+	color: #D6D6D5;
+}
+
+#first-headline {
+	margin-top: 190px;
+}
+
+#second-headline {
+	margin-top: 24px;
+}
+
+.navigation-under-text-btn {
+	margin-top: 77px;
+	margin-right: 67px;
+	background-color: #28B579;
+	color: white;
+	font-family: 'Roboto-Regular';
+	font-size: 20px;
+	padding: 18px 30px 16px 30px;
+}
+
+.navigation-under-text-btn:hover {
+	margin-top: 77px;
+	margin-right: 67px;
+	background-color: #1B9B61;
+	color: white;
+	font-family: 'Roboto-Regular';
+	font-size: 20px;
+	padding: 18px 30px 16px 30px;
+}
+
+.navigation-under-text-btn:active {
+	margin-top: 77px;
+	margin-right: 67px;
+	background-color: #1B9B61;
+	color: white;
+	font-family: 'Roboto-Regular';
+	font-size: 20px;
+	padding: 18px 30px 16px 30px;
+}
+
+.navigation-under-text-btn:visited {
+	margin-top: 77px;
+	margin-right: 67px;
+	background-color: #28B579;
+	color: white;
+	font-family: 'Roboto-Regular';
+	font-size: 20px;
+	padding: 18px 30px 16px 30px;
+}
+
+/* Start How Does It Work Styles */
+
+.how-does-it-work-container {
+	height: 425px;
+	background-color: white;
+}
+
+/* Start How Does It Work Styles */
+
+.clean-experience-container {
+	height: 425px;
+	background-color: #F2F4F5;
+}
+
+/* Start Feature Styles */
+
+.features-container {
+	height: 2246px;
+	background-color: white;
+}
+
+/* Start Announcement Styles */
+
+.announcement-container {
+	height: 70px;
+	background-color: #64BD60;
+}
+
+/* Start Footer Styles */
+
+.footer-container {
+	height: 155px;
+	background-color: #292E33;
 }
