@@ -1,0 +1,56 @@
+body {
+	background-color: #F0F1F5;
+	background-image: url(../img/grid_pattern.png);
+  	background-repeat: repeat;
+}
+
+.app_navigation_container {
+	height: auto;
+	background-color: white;
+	border-bottom: 2px solid #E9E9E9;
+}
+
+.app_navigation_green_bar {
+	background-color: #64BD60;
+	height: 18px;
+}
+
+.app_navigation_logo {
+	margin-top: 35px;
+	margin-bottom: 35px;
+	margin-left: 35px;
+}
+
+.app_navigation_create_new_header {
+	margin-top: 50px;
+	margin-right: 12px;
+	color: #888888;
+	font-family: 'Roboto-Light';
+	font-size: 19px;
+}
+
+.app_navigation_create_new_plus_icon {
+	margin-top: 49px;
+}
+
+.nav_right_container {
+	margin-right: ;
+}
+
+.app_navigation_last_saved {
+	margin-top: 52px;
+	margin-right: 12px;
+	color: #AAAAAA;
+	font-family: 'Roboto-Light';
+	font-size: 18px;
+}
+
+.app_navigation_link_icon {
+	margin-top: 49px;
+	margin-left: 25px;
+}
+
+.app_navigation_social_icon {
+	margin-top: 49px;
+	margin-left: 25px;
+}

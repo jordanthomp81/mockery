@@ -94,10 +94,6 @@ table {
 	min-height: 1px;
 }
 
-.red {
-	background-color: red;
-}
-
 /* Start Home Navigation Styles */
 
 .navigation-container {
@@ -233,7 +229,7 @@ table {
 }
 
 .how-does-it-work-icon-container  {
-	margin-top: 70px;
+	margin-top: 80px;
 	margin-bottom: 75px;
 }
 

@@ -4,11 +4,11 @@ angular.module('mockery')
 
       $routeProvider
 
-          .when('/', {
+          .when('/app', {
               templateUrl : '/app/components/home/index.html',
               controller : 'homeController',
               controllerAs: 'home'
-          }).when('/app', {
+          }).when('/', {
               templateUrl : '/app/components/wireframe/index.html',
               controller : 'wireframeController',
               controllerAs: 'wireframe'
