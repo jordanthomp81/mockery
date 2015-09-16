@@ -76,6 +76,18 @@ body {
 	padding-bottom: 28px;
 	border-bottom: 2px solid #E5E5E4;
 	display: block;
+	cursor: pointer;
+}
+
+.drawing_board_toolbar_text_icon {
+	margin-top: 32px;
+	margin-left: 32px;
+	margin-right: 28px;
+	padding-bottom: 28px;
+	border-bottom: 2px solid #E5E5E4;
+	display: block;
+	margin-bottom: 50px;
+	cursor: pointer;
 }
 
 .trash_icon_container {
@@ -117,6 +129,14 @@ body {
 	top: 250px;
 }
 
+.text {
+	position: absolute;
+	width: 150px;
+	height: auto;
+	color: #7E7D86;
+	top: 250px;
+}
+
 .circle {
 	position: absolute;
 	width: 100px;
@@ -125,3 +145,5 @@ body {
 	background-color: #7E7D86;
 	top: 250px;
 }
+
+.ui-resizable-ghost { border: 1px dotted black; }

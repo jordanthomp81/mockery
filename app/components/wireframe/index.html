@@ -16,7 +16,7 @@
 
 	</div></a> <!-- End of the large-1 -->
 
-	<a href="/"><div class="large-1 columns">
+	<a href="/" onclick="getAllElementsPosition()"><div class="large-1 columns">
 
 		<h2 class="left app_navigation_create_new_header">Save</h2>
 
@@ -50,9 +50,11 @@
 
 		<img onclick="createCircle()" class="drawing_board_toolbar_move_icon" src="../../../assets/img/circle_icon.png">
 
-		<p class="drawing_board_toolbar_move_height">Height: </p>
+		<img onclick="createText()" class="drawing_board_toolbar_text_icon" src="../../../assets/img/text_icon.png">
 
-		<img class="drawing_board_toolbar_move_icon" src="../../../assets/img/text_icon.png">
+		<p class="drawing_board_toolbar_move_width">Width: </p>
+
+		<p class="drawing_board_toolbar_move_height">Height: </p>
 
 		<div class="trash_icon_container text-center">
 			
@@ -71,21 +73,107 @@
 <script>
   $(document).foundation();
 
+  	var prev;
+
+  	function getAllElementsPosition() {
+	    var elementsArr = [];
+	    var startTime = Date.now();
+	    $('.drawing_board').children().each(function() {
+	       elementsArr.push($(this).position());
+	    });
+	    console.log(elementsArr);
+	    var endTime = Date.now();
+	    var totalTime = ( endTime - startTime ) / 100;
+	  }
+
   	function createBox() {
-  		var el = $('<div class="box"></div>').draggable().resizable();
+  		var el = $('<div class="box"></div>').draggable({
+  			start: function(event, ui) {
+  				console.log("Position: ");
+  				console.log($(this).position());
+  				console.log("Width: ");
+  				console.log($(this).width().toFixed(0));
+  				console.log("Height: ");
+  				console.log($(this).height().toFixed(0));
+  			},
+  			grid: [ 15, 15 ],
+  			end: function(event, ui) {
+  				console.log("asda");
+  			}
+  		}).resizable({
+  			resize : function(event, ui) {
+  				$('.drawing_board_toolbar_move_width').html("Width: " + ui.size.width.toFixed(0));
+		        $('.drawing_board_toolbar_move_height').html("Height: " + ui.size.height.toFixed(0));
+  			},
+  			ghost : true,
+  			grid: [ 15, 15 ]
+		});
 		$(".drawing_board").append(el);
 	}
 
 	function createCircle() {
 
-		var el = $('<div class="circle"></div>').draggable().resizable({
-		    stop: function(event, ui) {
-		        $('.drawing_board_toolbar_move_height').html("Height: " + ui.size.height);
-		    }
+		var el = $('<div class="circle"></div>')
+		.draggable({
+  			start: function(event, ui) {
+  				console.log("Position: ");
+  				console.log($(this).position());
+  				console.log("Width: ");
+  				console.log($(this).width().toFixed(0));
+  				console.log("Height: ");
+  				console.log($(this).height().toFixed(0));
+  			},
+  			end: function(event, ui) {
+  				console.log("asda");
+  			},
+  			grid: [ 15, 15 ]
+  		})
+		.resizable({
+  			resize : function(event, ui) {
+  				$('.drawing_board_toolbar_move_width').html("Width: " + ui.size.width.toFixed(0));
+		        $('.drawing_board_toolbar_move_height').html("Height: " + ui.size.height.toFixed(0));
+  			},
+  			ghost: true,
+  			grid: [ 15, 15 ]
+		}).selectable({
+			start: function(event, ui) {
+				$('.drawing_board_toolbar_move_width').html("Width: " + ui.size.width.toFixed(0));
+		        $('.drawing_board_toolbar_move_height').html("Height: " + ui.size.height.toFixed(0));
+			}
 		});
-
 		$(".drawing_board").append(el);
 
+	}
+
+	function getContentDiagonal() {
+	    var contentWidth = $("#content").width();
+	    var contentHeight = $("#content").height();
+	    return contentWidth * contentWidth + contentHeight * contentHeight;
+	}
+
+	function createText() {
+  		var el = $('<h2 class="text">Placeholder Text</h2>').draggable({
+  			start: function(event, ui) {
+  				console.log("Position: ");
+  				console.log($(this).position());
+  				console.log("Width: ");
+  				console.log($(this).width().toFixed(0));
+  				console.log("Height: ");
+  				console.log($(this).height().toFixed(0));
+  			},
+  			grid: [ 15, 15 ],
+  			end: function(event, ui) {
+  				console.log("asda");
+  			}
+  		}).resizable({
+  			resize : function(event, ui) {
+  				$('.drawing_board_toolbar_move_width').html("Width: " + ui.size.width.toFixed(0));
+		        $('.drawing_board_toolbar_move_height').html("Height: " + ui.size.height.toFixed(0));
+  			},
+  			ghost : true,
+  			grid: [ 15, 15 ]
+		});
+		$(".drawing_board").append(el);
 	}
 
 	$(document).ready( function() {
