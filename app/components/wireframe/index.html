@@ -40,6 +40,69 @@
 
 <div class="drawing_board_container row fullWidth">
 
-	<div class="drawing_board_toolbar"></div> <!-- End of the toolbar -->
+	<div class="drawing_board_toolbar large-2 columns end">
+		
+		<img class="drawing_board_toolbar_move_icon" src="../../../assets/img/move_icon.png">
+
+		<img class="drawing_board_toolbar_move_icon" src="../../../assets/img/undo_icon.png">
+
+		<img onclick="createBox()" class="drawing_board_toolbar_move_icon" src="../../../assets/img/box_icon.png">
+
+		<img onclick="createCircle()" class="drawing_board_toolbar_move_icon" src="../../../assets/img/circle_icon.png">
+
+		<p class="drawing_board_toolbar_move_height">Height: </p>
+
+		<img class="drawing_board_toolbar_move_icon" src="../../../assets/img/text_icon.png">
+
+		<div class="trash_icon_container text-center">
+			
+			<img class="drawing_board_toolbar_trash_icon" src="../../../assets/img/trash_can_icon.png">
+
+		</div>
+
+	</div> <!-- End of the drawing_board_container -->
+
+
+	<div class="drawing_board large-10 columns"></div> <!-- End of the drawing_board -->
+
 
 </div> <!-- End of the row -->
+
+<script>
+  $(document).foundation();
+
+  	function createBox() {
+  		var el = $('<div class="box"></div>').draggable().resizable();
+		$(".drawing_board").append(el);
+	}
+
+	function createCircle() {
+
+		var el = $('<div class="circle"></div>').draggable().resizable({
+		    stop: function(event, ui) {
+		        $('.drawing_board_toolbar_move_height').html("Height: " + ui.size.height);
+		    }
+		});
+
+		$(".drawing_board").append(el);
+
+	}
+
+	$(document).ready( function() {
+
+		$(".drawing_board_toolbar").draggable();
+
+		$(".drawing_board").children().draggable().resizable();
+
+	    $(".trash_icon_container").droppable({
+	        over: function(event, ui) {
+	        	$(this).addClass("trash_icon_container_hover");
+	            ui.draggable.fadeOut( 1000, function() {
+				    $(this).remove();
+				    $(".trash_icon_container").removeClass("trash_icon_container_hover");
+			    });
+	        }
+	    });
+
+	});
+</script>
