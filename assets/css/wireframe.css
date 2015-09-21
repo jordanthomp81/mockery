@@ -149,3 +149,7 @@ body {
 }
 
 .ui-resizable-ghost { border: 1px dotted black; }
+
+.selected {
+	border: 5px dotted black;
+}

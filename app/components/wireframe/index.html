@@ -151,7 +151,7 @@
 	}
 
   	function createBox() {
-  		var el = $('<div id=box' + currId + ' class="box"></div>').draggable({
+  		var el = $('<div id=box' + currId + ' class="box element"></div>').draggable({
   			start: function(event, ui) {
   				draggedObject = {action: 'dragged', elementId: $(this).attr("id"), shape:"box", width: $(this).width().toFixed(0), height: $(this).width().toFixed(0), top: $(this).position().top, left: $(this).position().left, background_color: rgb2hex($(this).css('background-color'))};
   				undoArray.push(draggedObject);
@@ -186,11 +186,10 @@
 	}
 
 	function createElement(id, text_content, shape, width, height, background_color, left, top) {
-		debugger;
 		if ( shape == "text"){
 			var option = {type : "textarea", action : "dblclick"};
 			var elementId = id;
-	  		var el = $('<p id=' + elementId + ' class="text">Double Click to change this text.</p>').draggable({
+	  		var el = $('<p id=' + elementId + ' class="text element">Double Click to change this text.</p>').draggable({
 	  			start: function(event, ui) {
 	  				 draggedObject = {text_content: $(this).html(), action: 'dragged', elementId: $(this).attr("id"), shape:"text", width: $(this).width().toFixed(0), height: $(this).width().toFixed(0), top: $(this).position().top, left: $(this).position().left, color: rgb2hex($(this).css('color'))};
 	  				 undoArray.push(draggedObject);
@@ -250,7 +249,7 @@
 	}
 
 	function createCircle() {
-		var el = $('<div id=circle' + currId + ' class="circle"></div>')
+		var el = $('<div id=circle' + currId + ' class="circle element"></div>')
 		.draggable({
   			start: function(event, ui) {
   				draggedObject = {action: 'dragged', elementId: $(this).attr("id"), shape:"circle", width: $(this).width().toFixed(0), height: $(this).width().toFixed(0), top: $(this).position().top, left: $(this).position().left, background_color: rgb2hex($(this).css('backgroundColor'))};
@@ -276,12 +275,8 @@
   			},
   			ghost: true,
   			grid: [ 15, 15 ]
-		}).selectable({
-			start: function(event, ui) {
-				$('.drawing_board_toolbar_move_width').html("Width: " + ui.size.width.toFixed(0));
-		        $('.drawing_board_toolbar_move_height').html("Height: " + ui.size.height.toFixed(0));
-			}
-		}).css({left: 0, top: 100, position: 'absolute'});
+		}).selectable()
+		.css({left: 0, top: 100, position: 'absolute'});
 		createdObject = {action: 'created', elementId: el.attr("id")};
 		undoArray.push(createdObject);
         undoArray = undoArray.slice(0,20);
@@ -300,7 +295,7 @@
 	function createText(text_content) {
 		var option = {type : "textarea", action : "dblclick"};
 		var elementId = '#text' + currId;
-  		var el = $('<p id=text' + currId + ' class="text">Double Click to change this text.</p>').draggable({
+  		var el = $('<p id=text' + currId + ' class="text element">Double Click to change this text.</p>').draggable({
   			start: function(event, ui) {
   				 draggedObject = {text_content: $(this).html(), action: 'dragged', elementId: $(this).attr("id"), shape:"text", width: $(this).width().toFixed(0), height: $(this).width().toFixed(0), top: $(this).position().top, left: $(this).position().left, color: rgb2hex($(this).css('color'))};
   				 undoArray.push(draggedObject);
@@ -329,6 +324,16 @@
 	}
 
 	$(document).ready( function() {
+
+		$(document).bind('click', function(e) {
+			if ( $(e.target).attr('class').split(' ')[1] == 'element' ) {
+				debugger;
+				$(e.target).addClass('selected');
+			}else {
+				debugger;
+				$(".element").removeClass('selected');
+			}
+		});
 
 		$('.app_navigation_last_saved').html("Last Save: " + timeNow());
 
