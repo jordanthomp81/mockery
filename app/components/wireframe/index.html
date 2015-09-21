@@ -195,10 +195,11 @@
 	  				 undoArray.push(draggedObject);
 			         undoArray = undoArray.slice(0,20);
 			         console.log(undoArray);
+			         $(this).addClass('ui-front');
 	  			},
 	  			grid: [ 15, 15 ],
-	  			end: function(event, ui) {
-	  				
+	  			stop: function(event, ui) {
+	  				$(this).removeClass('ui-front');
 	  			}
 	  		}).editable(option, function(e){
 				editedText = {old_text_content: e.old_value, action: 'textedit', elementId: $(elementId).attr("id"), shape:"text", width: $(elementId).width().toFixed(0), height: $(elementId).width().toFixed(0), top: $(elementId).position().top, left: $(elementId).position().left, color: rgb2hex($(elementId).css('color'))};
@@ -219,6 +220,10 @@
 	  				undoArray.push(draggedObject);
 			        undoArray = undoArray.slice(0,20);
 			        console.log(undoArray);
+			        $(this).addClass('ui-front');
+	  			},
+	  			stop: function() {
+	  				$(this).removeClass('ui-front');
 	  			},
 	  			grid: [ 15, 15 ],
 	  		}).resizable({
@@ -325,7 +330,7 @@
 
 	$(document).ready( function() {
 
-		$(document).bind('click', function(e) {
+		$(document).on('click', function(e) {
 			if ( $(e.target).attr('class').split(' ')[1] == 'element' ) {
 				debugger;
 				$(e.target).addClass('selected');
