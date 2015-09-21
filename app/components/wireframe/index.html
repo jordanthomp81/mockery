@@ -189,8 +189,8 @@
 		debugger;
 		if ( shape == "text"){
 			var option = {type : "textarea", action : "dblclick"};
-			var elementId = '#text' + currId;
-	  		var el = $('<p id=text' + currId + ' class="text">Double Click to change this text.</p>').draggable({
+			var elementId = id;
+	  		var el = $('<p id=' + elementId + ' class="text">Double Click to change this text.</p>').draggable({
 	  			start: function(event, ui) {
 	  				 draggedObject = {text_content: $(this).html(), action: 'dragged', elementId: $(this).attr("id"), shape:"text", width: $(this).width().toFixed(0), height: $(this).width().toFixed(0), top: $(this).position().top, left: $(this).position().left, color: rgb2hex($(this).css('color'))};
 	  				 undoArray.push(draggedObject);
