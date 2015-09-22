@@ -8,14 +8,6 @@
 
 	</div> <!-- End of the large-2 -->
 
-	<a href="/"><div class="large-1 columns">
-
-		<h2 class="left app_navigation_create_new_header">Create New</h2>
-
-		<img class="left app_navigation_create_new_plus_icon" src="../../../assets/img/plus_icon.png"></a>
-
-	</div></a> <!-- End of the large-1 -->
-
 	<a href="/" onclick="getAllElementsPosition()"><div class="large-1 columns">
 
 		<h2 class="left app_navigation_create_new_header">Save</h2>
@@ -31,8 +23,6 @@
 		<a href="/"><h2 class="left app_navigation_last_saved">Last Save: 4:46pm</h2></a>
 
 		<a href="/"><img class="app_navigation_link_icon" src="../../../assets/img/link_icon.png"></a>
-
-		<a href="/"><img class="app_navigation_social_icon" src="../../../assets/img/social_icon.png"></a>
 
 	</div></a> <!-- End of the large-2 -->
 	
@@ -73,6 +63,7 @@
 
   	var currId = $(".drawing_board").find("div").length + 1;
   	var undoArray = [];
+  	var selected = [];
 
   	function TrimColon(text) {
 	    return text.toString().replace(/^(.*?):*$/, '$1');
@@ -136,11 +127,12 @@
 					$(id).html(undoArray[currArrayItem].old_text_content);
 					break;
 				case 'trashed':
+				debugger;
 					if ( undoArray[currArrayItem].shape == 'text') {
 						createElement(undoArray[currArrayItem].elementId, undoArray[currArrayItem].text_content, undoArray[currArrayItem].shape, undoArray[currArrayItem].width, undoArray[currArrayItem].height, undoArray[currArrayItem].background_color, undoArray[currArrayItem].left, undoArray[currArrayItem].top);
 						break;
 					}else {
-						createElement(undoArray[currArrayItem].elementId, undoArray[currArrayItem].shape, undoArray[currArrayItem].width, undoArray[currArrayItem].height, undoArray[currArrayItem].background_color, undoArray[currArrayItem].left, undoArray[currArrayItem].top);
+						createElement(undoArray[currArrayItem].elementId, undoArray[currArrayItem].text_content, undoArray[currArrayItem].shape, undoArray[currArrayItem].width, undoArray[currArrayItem].height, undoArray[currArrayItem].background_color, undoArray[currArrayItem].left, undoArray[currArrayItem].top);
 						break;
 					}
 			}
@@ -333,16 +325,34 @@
 		$(document).on('click', function(e) {
 			if ( $(e.target).attr('class').split(' ')[1] == 'element' ) {
 				debugger;
-				$(e.target).addClass('selected');
+				if ( $(e.target).prop("tagName").toLowerCase() == 'div' ) {
+					newArray = {};
+					newArray.background_color = rgb2hex($(e.target).css('background-color'));
+					newArray.elementId = $(e.target).attr('id');
+					$(e.target).addClass('selected');
+					delete selected.color;
+					selected.unshift(newArray);
+					selected.slice(0,2);
+					if( typeof selected[1] !== 'undefined') {
+						if( selected[1].elementId !== selected[0].elementId ) {
+							$('#'+ selected[1].elementId).removeClass('selected');
+						}
+					}
+					console.log(selected);
+				}else if( selected[1].elementId !== selected[0].elementId ) {
+					selected.color = rgb2hex($(e.target).css('color'));
+					selected.elementId = $(e.target).attr('id');
+					$(e.target).addClass('selected');
+					delete  selected.background_color;
+					selected.slice(0,2);
+					console.log(selected);
+				}
 			}else {
-				debugger;
 				$(".element").removeClass('selected');
 			}
 		});
 
 		$('.app_navigation_last_saved').html("Last Save: " + timeNow());
-
-		$(".drawing_board_toolbar").draggable();
 
 		$(".drawing_board").children().draggable().resizable();
 

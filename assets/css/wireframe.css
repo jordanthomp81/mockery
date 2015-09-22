@@ -127,6 +127,7 @@ body {
 	height: 100px;
 	background-color: #D0CED2;
 	top: 25px;
+	box-sizing: border-box;
 }
 
 .text {
@@ -136,6 +137,7 @@ body {
 	color: #7E7D86;
 	top: 25px;
 	background-color: none;
+	box-sizing: border-box;
 }
 
 .circle {
@@ -144,8 +146,7 @@ body {
 	height: 100px;
 	border-radius: 50%;
 	background-color: #7E7D86;
-	
-
+	box-sizing: border-box;
 }
 
 .ui-resizable-ghost { border: 1px dotted black; }
