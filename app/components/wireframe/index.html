@@ -324,7 +324,6 @@
 
 		$(document).on('click', function(e) {
 			if ( $(e.target).attr('class').split(' ')[1] == 'element' ) {
-				debugger;
 				if ( $(e.target).prop("tagName").toLowerCase() == 'div' ) {
 					newArray = {};
 					newArray.background_color = rgb2hex($(e.target).css('background-color'));
@@ -339,12 +338,26 @@
 						}
 					}
 					console.log(selected);
-				}else if( selected[1].elementId !== selected[0].elementId ) {
-					selected.color = rgb2hex($(e.target).css('color'));
-					selected.elementId = $(e.target).attr('id');
+				}else if( $(e.target).prop("tagName").toLowerCase() == 'p' ) {
+					// selected.color = rgb2hex($(e.target).css('color'));
+					// selected.elementId = $(e.target).attr('id');
+					// $(e.target).addClass('selected');
+					// delete  selected.background_color;
+					// selected.slice(0,2);
+					// console.log(selected);
+
+					newArray = {};
+					newArray.background_color = rgb2hex($(e.target).css('color'));
+					newArray.elementId = $(e.target).attr('id');
 					$(e.target).addClass('selected');
-					delete  selected.background_color;
+					delete selected.background_color;
+					selected.unshift(newArray);
 					selected.slice(0,2);
+					if( typeof selected[1] !== 'undefined') {
+						if( selected[1].elementId !== selected[0].elementId ) {
+							$('#'+ selected[1].elementId).removeClass('selected');
+						}
+					}
 					console.log(selected);
 				}
 			}else {
