@@ -5,7 +5,7 @@ angular.module('mockery')
       $routeProvider
 
           .when('/app', {
-              templateUrl : '/app/components/home/index.html',
+              templateUrl : 'components/home/index.html',
               controller : 'homeController',
               controllerAs: 'home'
           }).when('/', {

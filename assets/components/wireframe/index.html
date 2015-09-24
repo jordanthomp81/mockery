@@ -1,0 +1,397 @@
+<div class="app_navigation_green_bar"></div> <!-- End of the app_navigation_green_bar -->
+
+<div class="app_navigation_container row fullWidth">
+
+	<div class="large-2 columns left">
+
+		<a href="/"><img class="app_navigation_logo" src="img/logo.png"></a>
+
+	</div> <!-- End of the large-2 -->
+
+	<a href="/" ng-click="wireframe.save()"><div class="large-1 columns">
+
+		<h2 class="left app_navigation_create_new_header">Save</h2>
+
+		<img class="left app_navigation_create_new_plus_icon" src="img/save_icon.png"></a>
+
+	</div></a> <!-- End of the large-1 -->
+
+	<div class="large-6 columns"></div> <!-- End of the large-6 -->
+
+	<div class="nav_right_container large-2 columns">
+
+		<a href="/"><h2 class="left app_navigation_last_saved">Last Save: 4:46pm</h2></a>
+
+		<a href="/"><img class="app_navigation_link_icon" src="img/link_icon.png"></a>
+
+	</div></a> <!-- End of the large-2 -->
+	
+</div> <!-- End of the row -->
+
+<div class="drawing_board_container row fullWidth">
+
+	<div class="drawing_board_toolbar large-2 columns">
+
+		<img onclick="undo()" class="drawing_board_toolbar_move_icon" src="img/undo_icon.png">
+
+		<img onclick="createBox()" class="drawing_board_toolbar_move_icon" src="img/box_icon.png">
+
+		<img onclick="createCircle()" class="drawing_board_toolbar_move_icon" src="img/circle_icon.png">
+
+		<img onclick="createText()" class="drawing_board_toolbar_text_icon" src="img/text_icon.png">
+
+		<p class="drawing_board_toolbar_move_width">Width: </p>
+
+		<p class="drawing_board_toolbar_move_height">Height: </p>
+
+		<div class="trash_icon_container text-center">
+			
+			<img class="drawing_board_toolbar_trash_icon" src="img/trash_can_icon.png">
+
+		</div>
+
+	</div> <!-- End of the drawing_board_container -->
+
+
+	<div class="drawing_board large-10 columns"></div> <!-- End of the drawing_board -->
+
+
+</div> <!-- End of the row -->
+
+<script>
+  $(document).foundation();
+
+  	var currId = $(".drawing_board").find("div").length + 1;
+  	var undoArray = [];
+  	var selected = [];
+
+  	function TrimColon(text) {
+	    return text.toString().replace(/^(.*?):*$/, '$1');
+	}
+
+  	function timeNow(i) {
+	  var d = new Date(),
+	      h = (d.getHours()<10?'0':'') + d.getHours(),
+	      m = (d.getMinutes()<10?'0':'') + d.getMinutes();
+	  i = h + ':' + m;
+	  iTrimmed = TrimColon(i).split(":");
+	  if ( iTrimmed[0] >= 13 ) {
+	  	iTrimmed[0] = iTrimmed[0] - 12;
+	  	i = iTrimmed[0] + ":" + iTrimmed[1] + "pm";
+	  	return i;
+	  }else {
+	  	return i + "am";
+	  }
+	}
+
+	function rgb2hex(rgb) {
+	    rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+	    function hex(x) {
+	        return ("0" + parseInt(x).toString(16)).slice(-2);
+	    }
+	    return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+	}
+
+  	function getAllElementsPosition() {
+	    var elementsArr = [];
+	    var startTime = Date.now();
+	    $('.drawing_board').children().each(function() {
+	       elementsArr.push($(this).position());
+	    });
+	    console.log(elementsArr);
+	    $('.app_navigation_last_saved').html("Last Save: " + timeNow());
+	    var endTime = Date.now();
+	    var totalTime = ( endTime - startTime ) / 100;
+	  }
+
+	function undo() {
+		var currArrayItem = undoArray.length - 1;
+		try {
+			switch(undoArray[currArrayItem].action) {
+				case 'resize':
+					var id = "#" + undoArray[currArrayItem].elementId;
+					$(id).css('width', undoArray[currArrayItem].width);
+					$(id).css('height', undoArray[currArrayItem].height);
+					break;
+				case 'dragged':
+					var id = "#" + undoArray[currArrayItem].elementId;
+					$(id).css('top', undoArray[currArrayItem].top);
+					$(id).css('left', undoArray[currArrayItem].left);
+					break;
+				case 'created':
+					var id = "#" + undoArray[currArrayItem].elementId;
+					$(id).remove();
+					break;
+				case 'textedit':
+					var id = "#" + undoArray[currArrayItem].elementId;
+					$(id).html(undoArray[currArrayItem].old_text_content);
+					break;
+				case 'trashed':
+				debugger;
+					if ( undoArray[currArrayItem].shape == 'text') {
+						createElement(undoArray[currArrayItem].elementId, undoArray[currArrayItem].text_content, undoArray[currArrayItem].shape, undoArray[currArrayItem].width, undoArray[currArrayItem].height, undoArray[currArrayItem].background_color, undoArray[currArrayItem].left, undoArray[currArrayItem].top);
+						break;
+					}else {
+						createElement(undoArray[currArrayItem].elementId, undoArray[currArrayItem].text_content, undoArray[currArrayItem].shape, undoArray[currArrayItem].width, undoArray[currArrayItem].height, undoArray[currArrayItem].background_color, undoArray[currArrayItem].left, undoArray[currArrayItem].top);
+						break;
+					}
+			}
+		}catch(err) {
+			console.log('There is no action to reverse');
+		}
+		undoArray.pop();
+	}
+
+  	function createBox() {
+  		var el = $('<div id=box' + currId + ' class="box element"></div>').draggable({
+  			start: function(event, ui) {
+  				draggedObject = {action: 'dragged', elementId: $(this).attr("id"), shape:"box", width: $(this).width().toFixed(0), height: $(this).width().toFixed(0), top: $(this).position().top, left: $(this).position().left, background_color: rgb2hex($(this).css('background-color'))};
+  				undoArray.push(draggedObject);
+		        undoArray = undoArray.slice(0,20);
+		        console.log(undoArray);
+		        $(this).addClass('ui-front');
+  			},
+  			grid: [ 15, 15 ],
+  			stop: function(event, ui) {
+ 				$(this).removeClass('ui-front');
+  			}
+  		}).resizable({
+  			resize : function(event, ui) {
+  				$('.drawing_board_toolbar_move_width').html("Width: " + ui.size.width.toFixed(0));
+		        $('.drawing_board_toolbar_move_height').html("Height: " + ui.size.height.toFixed(0));
+  			},
+  			start: function(event, ui) {
+  				resizeObject = {action: 'resize', elementId: $(this).attr("id"), shape:"box", width: ui.size.width.toFixed(0), height: ui.size.height.toFixed(0), top: $(this).position().top, left: $(this).position().left, background_color: rgb2hex($(this).css('backgroundColor'))};
+  				undoArray.push(resizeObject);
+		        undoArray = undoArray.slice(0,20);
+		        console.log(undoArray);
+  			},
+  			ghost : true,
+  			grid: [ 15, 15 ]
+		});
+		createdObject = {action: 'created', elementId: el.attr("id")};
+		undoArray.push(createdObject);
+        undoArray = undoArray.slice(0,20);
+        console.log(undoArray);
+		$(".drawing_board").append(el);
+		currId++;
+	}
+
+	function createElement(id, text_content, shape, width, height, background_color, left, top) {
+		if ( shape == "text"){
+			var option = {type : "textarea", action : "dblclick"};
+			var elementId = id;
+	  		var el = $('<p id=' + elementId + ' class="text element">Double Click to change this text.</p>').draggable({
+	  			start: function(event, ui) {
+	  				 draggedObject = {text_content: $(this).html(), action: 'dragged', elementId: $(this).attr("id"), shape:"text", width: $(this).width().toFixed(0), height: $(this).width().toFixed(0), top: $(this).position().top, left: $(this).position().left, color: rgb2hex($(this).css('color'))};
+	  				 undoArray.push(draggedObject);
+			         undoArray = undoArray.slice(0,20);
+			         console.log(undoArray);
+			         $(this).addClass('ui-front');
+	  			},
+	  			grid: [ 15, 15 ],
+	  			stop: function(event, ui) {
+	  				$(this).removeClass('ui-front');
+	  			}
+	  		}).editable(option, function(e){
+				editedText = {old_text_content: e.old_value, action: 'textedit', elementId: $(elementId).attr("id"), shape:"text", width: $(elementId).width().toFixed(0), height: $(elementId).width().toFixed(0), top: $(elementId).position().top, left: $(elementId).position().left, color: rgb2hex($(elementId).css('color'))};
+				 undoArray.push(editedText);
+		         undoArray = undoArray.slice(0,20);
+		         console.log(undoArray);
+			});
+			if( arguments.length > 0 ) {
+				el.html(text_content);
+			}
+			$(".drawing_board").append(el);
+			currId++;
+		}else {
+	  		var el = $('<div id=' + id + ' class=' + shape + '></div>').draggable({
+	  			start: function(event, ui) {
+	  				draggedObject = {action: 'dragged', elementId: $(this).attr("id"), shape: shape, width: $(this).width().toFixed(0), height: $(this).width().toFixed(0), top: $(this).position().top, left: $(this).position().left, background_color: rgb2hex($(this).css('background-color'))};
+	  				
+	  				undoArray.push(draggedObject);
+			        undoArray = undoArray.slice(0,20);
+			        console.log(undoArray);
+			        $(this).addClass('ui-front');
+	  			},
+	  			stop: function() {
+	  				$(this).removeClass('ui-front');
+	  			},
+	  			grid: [ 15, 15 ],
+	  		}).resizable({
+	  			resize : function(event, ui) {
+	  				  $('.drawing_board_toolbar_move_width').html("Width: " + ui.size.width.toFixed(0));
+			        $('.drawing_board_toolbar_move_height').html("Height: " + ui.size.height.toFixed(0));
+	  			},
+	  			start: function(event, ui) {
+	  				resizeObject = {action: 'resize', elementId: $(this).attr("id"), shape: shape, width: ui.size.width.toFixed(0), height: ui.size.height.toFixed(0), top: $(this).position().top, left: $(this).position().left, background_color: rgb2hex($(this).css('backgroundColor'))};
+	  				undoArray.push(resizeObject);
+			      undoArray = undoArray.slice(0,20);
+			      console.log(undoArray);
+	  			},
+	  			ghost : true,
+	  			grid: [ 15, 15 ]
+			});
+			if( arguments.length > 0 ) {
+				el.css('width', width);
+				el.css('height', height);
+				el.css('background-color', background_color);
+			}
+			el.css('left', left);
+			el.css('top', top);
+			el.css('position', 'absolute');
+			$(".drawing_board").append(el);
+			currId++;
+		}
+	}
+
+	function createCircle() {
+		var el = $('<div id=circle' + currId + ' class="circle element"></div>')
+		.draggable({
+  			start: function(event, ui) {
+  				draggedObject = {action: 'dragged', elementId: $(this).attr("id"), shape:"circle", width: $(this).width().toFixed(0), height: $(this).width().toFixed(0), top: $(this).position().top, left: $(this).position().left, background_color: rgb2hex($(this).css('backgroundColor'))};
+  				undoArray.push(draggedObject);
+		        undoArray = undoArray.slice(0,20);
+		        console.log(undoArray);
+  			},
+  			end: function(event, ui) {
+  				console.log("asda");
+  			},
+  			grid: [ 15, 15 ]
+  		})
+		.resizable({
+  			resize : function(event, ui) {
+  				$('.drawing_board_toolbar_move_width').html("Width: " + ui.size.width.toFixed(0));
+		        $('.drawing_board_toolbar_move_height').html("Height: " + ui.size.height.toFixed(0));
+  			},
+  			start: function(event, ui) {
+  				resizeObject = {action: 'resize', elementId: $(this).attr("id"), shape:"circle", width: ui.size.width.toFixed(0), height: ui.size.height.toFixed(0), top: $(this).position().top, left: $(this).position().left, background_color: rgb2hex($(this).css('backgroundColor'))};
+  				undoArray.push(resizeObject);
+		        undoArray = undoArray.slice(0,5);
+		        console.log(undoArray);
+  			},
+  			ghost: true,
+  			grid: [ 15, 15 ]
+		}).selectable()
+		.css({left: 0, top: 100, position: 'absolute'});
+		createdObject = {action: 'created', elementId: el.attr("id")};
+		undoArray.push(createdObject);
+        undoArray = undoArray.slice(0,20);
+        console.log(undoArray);
+		$(".drawing_board").append(el);
+		currId++;
+
+	}
+
+	function getContentDiagonal() {
+	    var contentWidth = $("#content").width();
+	    var contentHeight = $("#content").height();
+	    return contentWidth * contentWidth + contentHeight * contentHeight;
+	}
+
+	function createText(text_content) {
+		var option = {type : "textarea", action : "dblclick"};
+		var elementId = '#text' + currId;
+  		var el = $('<p id=text' + currId + ' class="text element">Double Click to change this text.</p>').draggable({
+  			start: function(event, ui) {
+  				 draggedObject = {text_content: $(this).html(), action: 'dragged', elementId: $(this).attr("id"), shape:"text", width: $(this).width().toFixed(0), height: $(this).width().toFixed(0), top: $(this).position().top, left: $(this).position().left, color: rgb2hex($(this).css('color'))};
+  				 undoArray.push(draggedObject);
+		         undoArray = undoArray.slice(0,20);
+		         console.log(undoArray);
+  			},
+  			grid: [ 15, 15 ],
+  			end: function(event, ui) {
+  				
+  			}
+  		}).editable(option, function(e){
+			editedText = {old_text_content: e.old_value, action: 'textedit', elementId: $(elementId).attr("id"), shape:"text", width: $(elementId).width().toFixed(0), height: $(elementId).width().toFixed(0), top: $(elementId).position().top, left: $(elementId).position().left, color: rgb2hex($(elementId).css('color'))};
+			 undoArray.push(editedText);
+	         undoArray = undoArray.slice(0,20);
+	         console.log(undoArray);
+		});
+		if( arguments.length > 0 ) {
+			el.html(text_content);
+		}
+		createdObject = {action: 'created', elementId: el.attr("id")};
+		undoArray.push(createdObject);
+        undoArray = undoArray.slice(0,20);
+        console.log(undoArray);
+		$(".drawing_board").append(el);
+		currId++;
+	}
+
+	$(document).ready( function() {
+
+		$(document).on('click', function(e) {
+			if ( $(e.target).attr('class').split(' ')[1] == 'element' ) {
+				if ( $(e.target).prop("tagName").toLowerCase() == 'div' ) {
+                    $('.drawing_board_toolbar_move_width').html("Width: " + $(e.target).width().toFixed(0));
+		            $('.drawing_board_toolbar_move_height').html("Height: " + $(e.target).height().toFixed(0));
+					newArray = {};
+					newArray.background_color = rgb2hex($(e.target).css('background-color'));
+					newArray.elementId = $(e.target).attr('id');
+					$(e.target).addClass('selected');
+					delete selected.color;
+					selected.unshift(newArray);
+					selected.slice(0,2);
+					if( typeof selected[1] !== 'undefined') {
+						if( selected[1].elementId !== selected[0].elementId ) {
+							$('#'+ selected[1].elementId).removeClass('selected');
+						}
+					}
+					console.log(selected);
+				}else if( $(e.target).prop("tagName").toLowerCase() == 'p' ) {
+					// selected.color = rgb2hex($(e.target).css('color'));
+					// selected.elementId = $(e.target).attr('id');
+					// $(e.target).addClass('selected');
+					// delete  selected.background_color;
+					// selected.slice(0,2);
+					// console.log(selected);
+                    $('.drawing_board_toolbar_move_width').html("Width: " + $(e.target).width().toFixed(0));
+		            $('.drawing_board_toolbar_move_height').html("Height: " + $(e.target).height().toFixed(0));
+					newArray = {};
+					newArray.background_color = rgb2hex($(e.target).css('color'));
+					newArray.elementId = $(e.target).attr('id');
+					$(e.target).addClass('selected');
+					delete selected.background_color;
+					selected.unshift(newArray);
+					selected.slice(0,2);
+					if( typeof selected[1] !== 'undefined') {
+						if( selected[1].elementId !== selected[0].elementId ) {
+							$('#'+ selected[1].elementId).removeClass('selected');
+						}
+					}
+					console.log(selected);
+				}
+			}else {
+				$(".element").removeClass('selected');
+			}
+		});
+
+		$('.app_navigation_last_saved').html("Last Save: " + timeNow());
+
+		$(".drawing_board").children().draggable().resizable();
+
+		var currArrayItem = undoArray.length;
+	    $(".trash_icon_container").droppable({
+	    	over: function(event, ui) {
+	          	$(this).addClass("trash_icon_container_hover");
+          		trashedObject = {action: 'trashed', elementId: undoArray[currArrayItem].elementId, shape: ui.draggable.attr('class').split(' ')[0], width: ui.draggable.width(), height: ui.draggable.height(), top: undoArray[currArrayItem].top, left: undoArray[currArrayItem].left};
+          		if (ui.draggable.attr('class').split(' ')[0] == 'text') {
+          			trashedObject.text_content = ui.draggable.html();
+          			trashedObject.color = rgb2hex(ui.draggable.css('color'))
+          		}else {
+          			trashedObject.background_color = rgb2hex(ui.draggable.css('background-color'))
+          		}
+				undoArray.push(trashedObject);
+        		
+        		console.log(undoArray);
+	      		ui.draggable.fadeOut( 1000, function() {
+			      	$(this).remove();
+			      	$(".trash_icon_container").removeClass("trash_icon_container_hover");
+		  		});
+	    	}
+	   	});
+
+	});
+</script>

@@ -1,0 +1,25 @@
+{
+  "name": "mockery",
+  "version": "1.0.0",
+  "description": "Wireframe tool",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jordanthomp81/mockery.git"
+  },
+  "author": "Jordan Thompson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jordanthomp81/mockery/issues"
+  },
+  "homepage": "https://github.com/jordanthomp81/mockery#readme",
+  "dependencies": {
+    "express": "^4.13.3",
+    "mongodb": "^2.0.43",
+    "mongoose": "^4.1.8",
+    "requestify": "^0.1.17"
+  }
+}
