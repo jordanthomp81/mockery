@@ -18,6 +18,9 @@
   "engines": {
     "node": "0.12.x"
   },
+  "scripts": {
+    "start": "node app.js"
+  },
   "homepage": "https://github.com/jordanthomp81/mockery#readme",
   "dependencies": {
     "express": "^4.13.3",
