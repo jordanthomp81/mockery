@@ -10,9 +10,6 @@
     "type": "git",
     "url": "git+https://github.com/jordanthomp81/mockery.git"
   },
-  "engines": {
-    "node": "0.10.x"
-  },
   "author": "Jordan Thompson",
   "license": "ISC",
   "bugs": {
